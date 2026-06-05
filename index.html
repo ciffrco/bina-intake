@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Bina × CIFFR — Identity Intake</title>
+<title>Bina × CIFFR — Brand Ecosystem Intake</title>
 <meta name="robots" content="noindex, nofollow" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -21,56 +21,51 @@
   body{
     color:var(--pearl); font-family:var(--body); font-weight:300; line-height:1.55;
     -webkit-font-smoothing:antialiased; min-height:100vh; position:relative; overflow-x:hidden;
-    /* duotone blend: onyx (top-left) → steel (bottom-right) */
     background:linear-gradient(135deg,#14171A 0%, #1c2125 32%, #444c54 60%, #aeb2ac 84%, #C7CAC2 100%);
     background-attachment:fixed;
   }
-  /* cipher field — scattered eastern numerals across the blend */
   .cipher{position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden}
   .cipher span{position:absolute; font-family:var(--arab); user-select:none; line-height:1}
   .keyline{position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.5}
-
   .wrap{position:relative; z-index:1; max-width:812px; margin:0 auto; padding:40px 22px 30px}
-
-  /* frosted content panel floating over the blend */
   .panel{
     background:var(--panel); border:1px solid var(--panel-line); border-radius:22px;
     padding:30px 40px 38px; backdrop-filter:blur(18px) saturate(1.05); -webkit-backdrop-filter:blur(18px) saturate(1.05);
     box-shadow:0 30px 80px -30px rgba(0,0,0,0.6), 0 2px 0 rgba(255,255,255,0.04) inset;
   }
-
   header{display:flex; align-items:center; justify-content:space-between; gap:14px}
   .brand{display:flex; align-items:center; gap:11px}
   .mark{width:17px; height:17px; background:var(--forest-rev); border-radius:5px; transform:rotate(-9deg); display:inline-block; box-shadow:0 0 0 4px rgba(44,107,71,0.12)}
   .wordmark{font-family:var(--display); font-weight:500; font-size:22px; letter-spacing:.5px}
-  .tagref{font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); text-align:right}
-
+  .tagref{font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); text-align:right; line-height:1.5}
   .progress{margin:30px 0 8px}
   .progress .meta{display:flex; justify-content:space-between; font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); margin-bottom:10px}
   .bar{height:2px; background:var(--line); border-radius:2px; overflow:hidden}
   .bar i{display:block; height:100%; width:0; background:var(--forest-rev); transition:width .5s cubic-bezier(.4,0,.2,1)}
-
+  /* tier pips */
+  .pips{display:flex; gap:6px; margin-top:12px}
+  .pips .pip{flex:1; height:3px; border-radius:3px; background:var(--line)}
+  .pips .pip.done{background:var(--forest-rev)}
+  .pips .pip.cur{background:#7fc79b}
   main{padding:18px 0 6px; min-height:48vh}
-  .step{display:none; animation:rise .55s cubic-bezier(.2,.7,.2,1)}
-  .step.active{display:block}
+  .step{display:block; animation:rise .55s cubic-bezier(.2,.7,.2,1)}
   @keyframes rise{from{opacity:0; transform:translateY(14px)} to{opacity:1; transform:none}}
   .eyebrow{font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:#7fc79b; margin-bottom:16px}
-  h1{font-family:var(--display); font-weight:500; font-size:34px; line-height:1.15; letter-spacing:-.2px; margin-bottom:14px}
-  h1 .num{color:var(--muted); font-size:24px; vertical-align:super; margin-right:8px}
-  .lede{color:var(--silver); font-size:16.5px; max-width:62ch; margin-bottom:26px; font-weight:300}
+  h1{font-family:var(--display); font-weight:500; font-size:33px; line-height:1.16; letter-spacing:-.2px; margin-bottom:14px}
+  h1 .num{color:var(--muted); font-size:23px; vertical-align:super; margin-right:8px}
+  .lede{color:var(--silver); font-size:16px; max-width:62ch; margin-bottom:24px; font-weight:300}
   .hint{color:var(--muted); font-size:13.5px; margin-top:8px}
-
   label.fld{display:block; margin:18px 0}
   label.fld .q{display:block; font-size:14px; color:var(--pearl); margin-bottom:9px; font-weight:400}
+  label.fld .q small{color:var(--muted); font-weight:300}
   input[type=text],input[type=email],textarea{
     width:100%; background:var(--onyx-2); border:1px solid var(--line); color:var(--pearl);
     font-family:var(--body); font-size:15.5px; font-weight:300; padding:14px 15px; border-radius:10px;
     transition:border-color .2s, background .2s; resize:vertical;
   }
-  textarea{min-height:108px; line-height:1.5}
+  textarea{min-height:104px; line-height:1.5}
   input:focus,textarea:focus{outline:none; border-color:var(--forest-rev); background:rgba(255,255,255,0.07)}
   ::placeholder{color:rgba(243,244,241,0.32)}
-
   .pairs{display:grid; gap:18px; margin-top:6px}
   .pair .plabel{font-size:13px; color:var(--muted); margin-bottom:9px; letter-spacing:.04em}
   .opts{display:grid; grid-template-columns:1fr 1fr; gap:12px}
@@ -80,13 +75,11 @@
   .opt .od{font-size:12.5px; color:var(--muted); line-height:1.4}
   .opt.sel{border-color:var(--forest-rev); background:rgba(44,107,71,0.22)}
   .opt.sel .ot{color:#bfe3cd}
-
   .chips{display:flex; flex-wrap:wrap; gap:10px; margin-top:4px}
   .chip{border:1px solid var(--line); background:var(--onyx-2); color:var(--silver); padding:9px 16px; border-radius:999px; cursor:pointer; font-size:14px; transition:.16s; user-select:none}
   .chip:hover{border-color:rgba(243,244,241,0.34)}
   .chip.sel{background:var(--forest); border-color:var(--forest); color:#eaf5ee}
   .counter{font-size:12.5px; color:var(--muted); margin-top:12px}
-
   .nav{display:flex; align-items:center; justify-content:space-between; margin-top:34px; gap:14px}
   button{font-family:var(--body); cursor:pointer; border:none; font-size:14.5px; transition:.18s}
   .ghost{background:transparent; color:var(--muted); padding:13px 6px}
@@ -96,26 +89,20 @@
   .primary:hover{background:var(--forest-rev)}
   .primary[disabled]{opacity:.4; pointer-events:none}
   .err{color:#e8917e; font-size:13px; margin-top:12px; min-height:18px}
-
-  .rev{border:1px solid var(--line); border-radius:12px; overflow:hidden; margin-top:6px}
-  .rev .row{display:flex; gap:14px; padding:13px 16px; border-bottom:1px solid var(--line); font-size:14px}
-  .rev .row:last-child{border-bottom:none}
-  .rev .k{flex:0 0 150px; color:var(--muted); font-size:12.5px; text-transform:uppercase; letter-spacing:.1em; padding-top:2px}
-  .rev .v{flex:1; color:var(--pearl); white-space:pre-wrap; font-weight:300}
-  .rev .v.empty{color:rgba(243,244,241,0.3)}
-
-  .done{text-align:center; padding:34px 0}
-  .done .big{font-family:var(--display); font-size:40px; font-weight:500; margin:22px 0 10px}
-  .done p{color:var(--silver); max-width:46ch; margin:0 auto 6px}
-  .done .ar{font-family:var(--arab); color:#8fd4ab; font-size:34px; margin-top:18px; letter-spacing:.1em}
-  .spinner{width:34px;height:34px;border:2px solid var(--line);border-top-color:var(--forest-rev);border-radius:50%;margin:0 auto;animation:spin .8s linear infinite}
+  .check{text-align:center; padding:26px 0 6px}
+  .check .seal{font-family:var(--arab); color:#8fd4ab; font-size:30px; letter-spacing:.1em; margin-bottom:14px}
+  .check h1{font-size:30px}
+  .check .lede{margin-left:auto; margin-right:auto}
+  .done{text-align:center; padding:30px 0}
+  .done .big{font-family:var(--display); font-size:40px; font-weight:500; margin:16px 0 10px}
+  .done p{color:var(--silver); max-width:48ch; margin:0 auto 6px}
+  .done .ar{font-family:var(--arab); color:#8fd4ab; font-size:34px; margin-top:6px; letter-spacing:.1em}
+  .spinner{width:32px;height:32px;border:2px solid var(--line);border-top-color:var(--forest-rev);border-radius:50%;margin:0 auto;animation:spin .8s linear infinite}
   @keyframes spin{to{transform:rotate(360deg)}}
-
   footer{position:relative; z-index:1; text-align:center; color:rgba(22,25,28,0.6); font-size:11px; letter-spacing:.12em; text-transform:uppercase; padding:22px 0 6px; text-shadow:0 1px 0 rgba(255,255,255,0.18)}
   @media(max-width:560px){
     .panel{padding:24px 22px 30px; border-radius:18px}
-    h1{font-size:27px} .lede{font-size:15px} .opts{grid-template-columns:1fr}
-    .rev .row{flex-direction:column; gap:5px} .rev .k{flex-basis:auto}
+    h1{font-size:26px} .lede{font-size:15px} .opts{grid-template-columns:1fr}
     .wrap{padding:26px 16px 24px}
   }
 </style>
@@ -128,38 +115,30 @@
   <div class="panel">
     <header>
       <div class="brand"><span class="mark"></span><span class="wordmark">ciffr</span></div>
-      <div class="tagref">Identity Intake · 01 / 04<br>for Bina</div>
+      <div class="tagref" id="tagref">Brand Ecosystem Intake<br>Part 01 / 04 · for Bina</div>
     </header>
-
     <div class="progress">
-      <div class="meta"><span id="stepName">Welcome</span><span id="stepCount">Step 1</span></div>
+      <div class="meta"><span id="stepName">Welcome</span><span id="stepCount">Part 1 / 4</span></div>
       <div class="bar"><i id="barfill"></i></div>
+      <div class="pips" id="pips"></div>
     </div>
-
-    <main id="main"><!-- steps injected --></main>
+    <main id="main"></main>
   </div>
-
   <footer>Built by CIFFR · Start at zero. Don't stay there.</footer>
 </div>
 
 <script>
-/* ============== CONFIG ============== */
+/* ================= CONFIG ================= */
 var WEBHOOK_URL = "https://hook.us2.make.com/mn0i853hb3v196shjtm14grxca5csbvv";
-var STORE_KEY = "bina_tier1_v1";
+var STORE_KEY = "bina_intake_v2";
 
-/* ============== STATE ============== */
-var state = {
-  company:"", contact:"", email:"",
-  audience:"", feeling:"",
-  dir:{}, brands_loved:"", brand_disliked:"",
-  adjectives:[], antibrand:"",
-  voice:{}, voice_note:"",
-  ambition:"", notes:""
+var TIERS = {
+  1:{label:"Tier 1 — Identity",   name:"Identity & Brand Core"},
+  2:{label:"Tier 2 — Services",   name:"Services & Capabilities"},
+  3:{label:"Tier 3 — Operations", name:"Operations & Org"},
+  4:{label:"Tier 4 — Growth",     name:"Journey & Growth"}
 };
-try{ var saved = localStorage.getItem(STORE_KEY); if(saved){ state = Object.assign(state, JSON.parse(saved)); } }catch(e){}
-function persist(){ try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }catch(e){} }
 
-/* ============== STEP DATA ============== */
 var dirPairs = [
   {label:"Material & feel", a:{t:"Warm & natural", d:"Oak, linen, stone, soft light"}, b:{t:"Cool & architectural", d:"Concrete, steel, glass, hard edges"}},
   {label:"Expression", a:{t:"Minimal & quiet", d:"Restraint, space, calm"}, b:{t:"Bold & expressive", d:"Statement, drama, presence"}},
@@ -170,264 +149,267 @@ var voicePairs = [
   {label:"Wording", a:{t:"Plain & direct", d:"Few words, said well"}, b:{t:"Rich & descriptive", d:"Texture and detail"}},
   {label:"Posture", a:{t:"Expert & authoritative", d:"We know our craft"}, b:{t:"Warm & approachable", d:"We're easy to work with"}}
 ];
-var adjList = ["calm","bold","warm","precise","playful","premium","raw","friendly","serious","quiet","crafted","modern","timeless","technical","artisanal"];
 
-var steps = [
-  {name:"Welcome", render:renderWelcome},
-  {name:"Who you are", render:renderBasics},
-  {name:"The one client", render:renderAudience},
-  {name:"The feeling", render:renderFeeling},
-  {name:"Direction", render:renderDirection},
-  {name:"References", render:renderRefs},
-  {name:"Character", render:renderAdjectives},
-  {name:"The anti-brand", render:renderAnti},
-  {name:"The voice", render:renderVoice},
-  {name:"The ambition", render:renderAmbition},
-  {name:"Anything else", render:renderNotes},
-  {name:"Review", render:renderReview},
-  {name:"Done", render:renderDone}
+/* ---- the flow: welcome, question steps grouped by tier, a checkpoint after each tier ---- */
+var FLOW = [
+  {kind:"welcome"},
+
+  /* ===== TIER 1 — Identity & Brand Core (react, don't report) ===== */
+  {kind:"q", tier:1, name:"Who you are", title:"Who you are", lede:"A couple of details so we know whose brand we're building.", type:"fields",
+   items:[{key:"company",label:"Company / project name",ph:"e.g. Bina",req:true},{key:"contact",label:"Your name",ph:"Who we'll be working with",req:true},{key:"email",label:"Email",ph:"Where we send updates",inputType:"email",req:true}]},
+  {kind:"q", tier:1, name:"The one client", title:"Picture one real client.", lede:"Not a “target market” — one actual person who'd love what you do. Who are they, and what are they building?", type:"area", key:"audience", sum:"The one client", ph:"A villa owner in Abdoun renovating their home; a developer fitting out an office; a restaurant owner who wants something custom…"},
+  {kind:"q", tier:1, name:"The feeling", title:"When someone meets Bina, what's the one feeling?", lede:"Or the one action you want them to take. Just the single most important one.", type:"area", key:"feeling", sum:"Desired feeling/action", ph:"e.g. “They feel their project is in expert hands and stop shopping around.”"},
+  {kind:"q", tier:1, name:"Direction", title:"Which way does Bina lean?", lede:"Pick the side of each pair that feels closer. No right answer — you can lean only slightly.", type:"pairs", key:"dir", sum:"Direction", pairs:dirPairs},
+  {kind:"q", tier:1, name:"References", title:"Show us your taste.", lede:"Brands you love can be from any industry. We're not after the look — we're after why you love them.", type:"areas", sum:"References",
+   items:[{key:"brands_loved",label:"3 brands you love — and why",ph:"1. … because …\n2. … because …\n3. … because …"},{key:"brand_disliked",label:"1 brand you can't stand — and why",ph:"… because …"}]},
+  {kind:"q", tier:1, name:"Character", title:"Pick the words that fit Bina.", lede:"Choose 3 to 5. The ones you leave behind tell us just as much.", type:"chips", key:"adjectives", sum:"Character", min:3, max:5,
+   options:["calm","bold","warm","precise","playful","premium","raw","friendly","serious","quiet","crafted","modern","timeless","technical","artisanal"]},
+  {kind:"q", tier:1, name:"The anti-brand", title:"Now the version you'd hate.", lede:"Subtraction is easier than creation — and just as revealing. Describe the Bina that would make you cringe.", type:"area", key:"antibrand", sum:"Anti-brand", ph:"Cheap? Loud? Generic? Trying too hard? Tell us what to stay away from."},
+  {kind:"q", tier:1, name:"The voice", title:"How should Bina speak?", lede:"Same idea — lean toward the side that fits.", type:"pairs", key:"voice", sum:"Voice", pairs:voicePairs, noteKey:"voice_note", noteLabel:"A phrase you already use about Bina (optional)", notePh:"The best taglines are usually something the founder already said."},
+  {kind:"q", tier:1, name:"The ambition", title:"If this works perfectly, what's different in 12 months?", lede:"For you, and for a client. This tells us what we're really building toward.", type:"area", key:"ambition", sum:"12-month ambition", ph:"e.g. “Bina is the first name people in Amman think of for turnkey interiors.”"},
+  {kind:"checkpoint", tier:1},
+
+  /* ===== TIER 2 — Services & Capabilities (facts) ===== */
+  {kind:"q", tier:2, name:"What you offer", title:"What does Bina actually do?", lede:"Tap everything Bina offers today. We'll structure it into a clear service architecture.", type:"chips", key:"services_offered", sum:"Services offered", min:1, max:99,
+   options:["Interior Design","Space Planning","Custom Furniture","Wood Manufacturing","Joinery","Metal Fabrication","CNC Production","Architectural Elements","Shop Drawings","Technical Drawings","Site Execution","Installation","Turnkey Delivery"]},
+  {kind:"q", tier:2, name:"Core & standard", title:"Your core service — and your standard.", lede:"What's the heart of the business, and what makes the work good?", type:"areas", sum:"Core & quality",
+   items:[{key:"flagship",label:"The flagship / most important service — and why",ph:"The one you're known for, or that drives the business…"},{key:"quality_standard",label:"What makes Bina's work quality? Your standard.",ph:"Joinery tolerances, finish quality, materials, attention to detail…"}]},
+  {kind:"q", tier:2, name:"Project types", title:"Who do you build for?", lede:"The kinds of projects Bina takes on. Tap what applies; add anything missing.", type:"chips", key:"project_types", sum:"Project types", min:0, max:99,
+   options:["Private villas","Apartments","Offices","Retail","Restaurants & cafés","Hotels / hospitality","Commercial","Public / institutional"], textKey:"project_types_other", textLabel:"Anything else", textPh:"Other project types…"},
+  {kind:"q", tier:2, name:"Capabilities", title:"What's under your roof?", lede:"Your in-house capabilities. This is what lets us prove Bina can deliver end to end.", type:"areas", sum:"Capabilities",
+   items:[{key:"capabilities",label:"Machines & equipment (CNC, woodworking, metal, finishing…)",ph:"e.g. 3-axis CNC router, edge bander, spray booth, welding…"},{key:"materials",label:"Materials & finishes you work with",ph:"Solid wood, veneer, MDF, laminate, steel, brass, glass, stone…"},{key:"inhouse_outsourced",label:"What's in-house vs subcontracted?",ph:"e.g. joinery & CNC in-house; upholstery & stone outsourced…"}]},
+  {kind:"q", tier:2, name:"Proof", title:"Show us your best work.", lede:"2–3 projects we can turn into case studies — the ones you're proudest of.", type:"area", key:"notable_projects", sum:"Notable projects", ph:"Project — what it was, what Bina did, what made it special. Repeat for 2–3."},
+  {kind:"checkpoint", tier:2},
+
+  /* ===== TIER 3 — Operations & Org (facts) ===== */
+  {kind:"q", tier:3, name:"The team", title:"Who makes it happen?", lede:"How Bina is put together today. Rough is fine — we'll structure it.", type:"areas", sum:"Team & structure",
+   items:[{key:"team",label:"Team size & rough breakdown",ph:"e.g. 12 people: 2 design, 6 workshop, 2 site, 1 admin, owner…"},{key:"org_structure",label:"Departments, who leads what, reporting lines",ph:"Who runs design, production, site? Who reports to whom?"}]},
+  {kind:"q", tier:3, name:"How work flows", title:"How does a project move through Bina?", lede:"The path from yes to done. Bullet points are perfect.", type:"areas", sum:"Workflows",
+   items:[{key:"workflow_sales",label:"Inquiry → contract (sales & design)",ph:"First contact, site visit, proposal, design approval, deposit…"},{key:"workflow_production",label:"Production & fabrication",ph:"Drawings released, materials, CNC/joinery, assembly, finishing, QC…"},{key:"workflow_site",label:"Installation & handover",ph:"Delivery, site install, snagging, sign-off, handover…"}]},
+  {kind:"q", tier:3, name:"Standards & tools", title:"How do you keep it tight?", lede:"Quality control and the systems you run on.", type:"areas", sum:"Standards & tools",
+   items:[{key:"quality_control",label:"How do you check quality along the way?",ph:"Workshop QC, site checks, who signs off, tolerances…"},{key:"tools_systems",label:"Software & tools you use",ph:"AutoCAD, SketchUp, 3D, project management, accounting…"}]},
+  {kind:"q", tier:3, name:"Friction", title:"Where does it break down?", lede:"Be honest — this is internal. Knowing the bottlenecks is how we build systems that fix them.", type:"area", key:"bottlenecks", sum:"Bottlenecks / pain points", ph:"Where do delays, rework, or miscommunication usually happen?"},
+  {kind:"checkpoint", tier:3},
+
+  /* ===== TIER 4 — Journey & Growth ===== */
+  {kind:"q", tier:4, name:"How they find you", title:"How do clients find Bina today?", lede:"Tap what brings work in now; add detail if useful.", type:"chips", key:"lead_sources", sum:"Lead sources", min:0, max:99,
+   options:["Referrals / word of mouth","Instagram","Past clients","Architects / designers","Contractors","Walk-in / showroom","Website","Exhibitions"], textKey:"lead_sources_note", textLabel:"Detail (optional)", textPh:"e.g. most work is referral from past villa clients…"},
+  {kind:"q", tier:4, name:"The journey", title:"What's it like to be a Bina client?", lede:"The experience from first contact to after handover — in their words.", type:"area", key:"client_journey", sum:"Client journey", ph:"How a client is guided, kept updated, and looked after through the project…"},
+  {kind:"q", tier:4, name:"Why you win", title:"Why do clients choose Bina?", lede:"And who you're up against. This becomes the sales narrative.", type:"areas", sum:"Positioning",
+   items:[{key:"differentiators",label:"Why clients pick Bina over others",ph:"What you do that competitors can't or won't…"},{key:"competitors",label:"Main competitors",ph:"Who else clients consider…"}]},
+  {kind:"q", tier:4, name:"Questions & doubts", title:"What do clients always ask — or worry about?", lede:"We'll turn these into an FAQ and objection-handling library.", type:"areas", sum:"FAQs & objections",
+   items:[{key:"faqs",label:"Questions clients always ask",ph:"Price? Timeline? Can you do X? How does it work?"},{key:"objections",label:"Common concerns — and how you answer them",ph:"“Too expensive”, “takes too long”, “will it look like the render”…"}]},
+  {kind:"q", tier:4, name:"Channels & growth", title:"Where you show up — and where you're headed.", lede:"Tap the channels Bina uses or wants to, then tell us the ambition.", type:"chips", key:"channels", sum:"Channels", min:0, max:99,
+   options:["Website","Instagram","LinkedIn","TikTok","YouTube","Email","Referrals","Exhibitions"], textKey:"growth", textLabel:"Where do you want Bina in 2–3 years? (new markets, services, scale)", textPh:"Bigger projects, new city, more turnkey, a showroom…", textArea:true},
+  {kind:"done", tier:4}
 ];
-var i = 0;
 
-/* ============== RENDERERS ============== */
+/* ================= STATE ================= */
+var state = {
+  company:"", contact:"", email:"",
+  audience:"", feeling:"", dir:{}, brands_loved:"", brand_disliked:"", adjectives:[], antibrand:"", voice:{}, voice_note:"", ambition:"",
+  services_offered:[], flagship:"", quality_standard:"", project_types:[], project_types_other:"", capabilities:"", materials:"", inhouse_outsourced:"", notable_projects:"",
+  team:"", org_structure:"", workflow_sales:"", workflow_production:"", workflow_site:"", quality_control:"", tools_systems:"", bottlenecks:"",
+  lead_sources:[], lead_sources_note:"", client_journey:"", differentiators:"", competitors:"", faqs:"", objections:"", channels:[], growth:""
+};
+var idx = 0;
+var submitted = {};
+try{ var saved = JSON.parse(localStorage.getItem(STORE_KEY)||"null"); if(saved){ state=Object.assign(state,saved.state||{}); idx=saved.idx||0; submitted=saved.submitted||{}; } }catch(e){}
+function persist(){ try{ localStorage.setItem(STORE_KEY, JSON.stringify({state:state, idx:idx, submitted:submitted})); }catch(e){} }
+
+/* ================= HELPERS ================= */
 function esc(s){ return (s||"").replace(/[<>&]/g,function(c){return {'<':'&lt;','>':'&gt;','&':'&amp;'}[c];}); }
+function dash(v){ return (v && String(v).trim())? String(v).trim() : "—"; }
+function curTier(){ var s=FLOW[idx]; return s.tier || 1; }
 
+function fldInput(label,key,inputType,ph,max){ return '<label class="fld"><span class="q">'+label+'</span><input type="'+(inputType||'text')+'" data-key="'+key+'" value="'+esc(state[key])+'" placeholder="'+esc(ph||'')+'" maxlength="'+(max||200)+'" autocomplete="off" /></label>'; }
+function fldArea(label,key,ph,max){ return '<label class="fld"><span class="q">'+label+'</span><textarea data-key="'+key+'" placeholder="'+esc(ph||'')+'" maxlength="'+(max||800)+'">'+esc(state[key])+'</textarea></label>'; }
+
+/* ================= RENDER ================= */
+function head(step){ var t=TIERS[step.tier]; var n=String(idx).padStart(2,'0'); return '<div class="eyebrow">'+t.name+'</div><h1><span class="num">'+n+'</span>'+step.title+'</h1>'+(step.lede?'<p class="lede">'+step.lede+'</p>':''); }
+
+function renderStep(){
+  var s = FLOW[idx];
+  if(s.kind==="welcome") return renderWelcome();
+  if(s.kind==="checkpoint") return renderCheckpoint(s);
+  if(s.kind==="done") return renderDone();
+  var body = head(s);
+  if(s.type==="fields"){ s.items.forEach(function(it){ body+=fldInput(it.label,it.key,it.inputType,it.ph,it.max); }); }
+  else if(s.type==="area"){ body+=fldArea(s.label||"Your answer",s.key,s.ph,s.max||1000); }
+  else if(s.type==="areas"){ s.items.forEach(function(it){ body+=fldArea(it.label,it.key,it.ph,it.max||800); }); }
+  else if(s.type==="pairs"){ body+=renderPairs(s); }
+  else if(s.type==="chips"){ body+=renderChips(s); }
+  return body+nav(s);
+}
 function renderWelcome(){
-  return '<div class="eyebrow">Bina × CIFFR · Tier 1 of 4 — Identity &amp; Brand Core</div>'+
+  return '<div class="eyebrow">Bina × CIFFR · Brand Ecosystem Intake</div>'+
   '<h1>You don’t need to have this figured out.</h1>'+
-  '<p class="lede">That’s exactly what we’re for. We’re not going to hand you a 40-question brief. We’ll show you things and ask you to react — and from your reactions, we build the brand. If something’s wrong, just say so. Getting it wrong on the way is how we find what’s right.</p>'+
-  '<p class="lede" style="margin-bottom:6px">This is the first of four short passes. Each one quietly unlocks a part of the work, so by the time you finish one, we’ve already started. This pass takes about <strong style="color:var(--pearl);font-weight:400">7–10 minutes</strong>. Your progress saves automatically.</p>'+
-  '<div class="hint">Nothing here is a test. There are no wrong answers — only useful ones.</div>';
+  '<p class="lede">That’s exactly what we’re for. We won’t hand you a giant brief — we’ll show you things and ask you to react, and from your reactions we build the system.</p>'+
+  '<p class="lede">This is <strong style="color:var(--pearl);font-weight:400">one journey in four short parts</strong> — Identity, Services, Operations, and Growth. As you finish each part, it reaches us and we start work on it straight away, while you keep going. Altogether it takes about <strong style="color:var(--pearl);font-weight:400">20 minutes</strong>, and it saves as you go — you can stop and come back.</p>'+
+  '<div class="hint">Nothing here is a test. There are no wrong answers — only useful ones.</div>'+nav(FLOW[idx]);
 }
-function renderBasics(){
-  return head("Who you are","A couple of details so we know whose brand we’re building.")+
-  fld("Company / project name","company","text","e.g. Bina")+
-  fld("Your name","contact","text","Who we’ll be working with")+
-  fld("Email","email","email","Where we send updates");
-}
-function renderAudience(){
-  return head("Picture one real client.","Not a “target market” — one actual person who would love what you do. Who are they, and what are they trying to build?")+
-  fldArea("The one client","audience","A villa owner in Abdoun renovating their home; a developer fitting out an office; a restaurant owner who wants something custom…");
-}
-function renderFeeling(){
-  return head("When someone meets Bina, what’s the one feeling?","Or the one action you want them to take. Just the single most important one.")+
-  fldArea("The feeling or action","feeling","e.g. “They feel their project is in expert hands and stop shopping around.”");
-}
-function renderDirection(){
-  var h = head("Which way does Bina lean?","Pick the side of each pair that feels closer. There’s no right answer — and you can lean only slightly.");
+function renderPairs(s){
   var html='<div class="pairs">';
-  dirPairs.forEach(function(p,idx){
-    var sa = state.dir[idx]===p.a.t?' sel':''; var sb = state.dir[idx]===p.b.t?' sel':'';
+  s.pairs.forEach(function(p,i){
+    var cur = (state[s.key]||{})[i];
     html+='<div class="pair"><div class="plabel">'+p.label+'</div><div class="opts">'+
-      '<div class="opt'+sa+'" data-dir="'+idx+'" data-val="'+esc(p.a.t)+'"><div class="ot">'+p.a.t+'</div><div class="od">'+p.a.d+'</div></div>'+
-      '<div class="opt'+sb+'" data-dir="'+idx+'" data-val="'+esc(p.b.t)+'"><div class="ot">'+p.b.t+'</div><div class="od">'+p.b.d+'</div></div>'+
+      '<div class="opt'+(cur===p.a.t?' sel':'')+'" data-pair="'+s.key+'" data-pi="'+i+'" data-val="'+esc(p.a.t)+'"><div class="ot">'+p.a.t+'</div><div class="od">'+p.a.d+'</div></div>'+
+      '<div class="opt'+(cur===p.b.t?' sel':'')+'" data-pair="'+s.key+'" data-pi="'+i+'" data-val="'+esc(p.b.t)+'"><div class="ot">'+p.b.t+'</div><div class="od">'+p.b.d+'</div></div>'+
       '</div></div>';
   });
-  return h+html+'</div>';
-}
-function renderRefs(){
-  return head("Show us your taste.","Brands you love can be from any industry — a car, a hotel, a fashion label. We’re not after the look; we’re after why you love them.")+
-  fldArea("3 brands you love — and why","brands_loved","1. … because …\n2. … because …\n3. … because …")+
-  fldArea("1 brand you can’t stand — and why","brand_disliked","… because …");
-}
-function renderAdjectives(){
-  var h = head("Pick the words that fit Bina.","Choose 3 to 5. Tap to select, tap again to remove. The ones you leave behind tell us just as much.");
-  var html='<div class="chips">';
-  adjList.forEach(function(w){ var s = state.adjectives.indexOf(w)>-1?' sel':''; html+='<span class="chip'+s+'" data-adj="'+w+'">'+w+'</span>'; });
-  return h+html+'</div><div class="counter" id="adjCount"></div>';
-}
-function renderAnti(){
-  return head("Now the version you’d hate.","Subtraction is easier than creation — and just as revealing. Describe the Bina that would make you cringe.")+
-  fldArea("The anti-brand","antibrand","What would make you cringe? Cheap? Loud? Generic? Trying too hard? Tell us what to stay away from.");
-}
-function renderVoice(){
-  var h = head("How should Bina speak?","Same idea — lean toward the side that fits.");
-  var html='<div class="pairs">';
-  voicePairs.forEach(function(p,idx){
-    var sa = state.voice[idx]===p.a.t?' sel':''; var sb = state.voice[idx]===p.b.t?' sel':'';
-    html+='<div class="pair"><div class="plabel">'+p.label+'</div><div class="opts">'+
-      '<div class="opt'+sa+'" data-voice="'+idx+'" data-val="'+esc(p.a.t)+'"><div class="ot">'+p.a.t+'</div><div class="od">'+p.a.d+'</div></div>'+
-      '<div class="opt'+sb+'" data-voice="'+idx+'" data-val="'+esc(p.b.t)+'"><div class="ot">'+p.b.t+'</div><div class="od">'+p.b.d+'</div></div>'+
-      '</div></div>';
-  });
-  return h+html+'</div>'+fldArea("A phrase you already use about Bina (optional)","voice_note","The best taglines are usually something the founder already said.");
-}
-function renderAmbition(){
-  return head("If this works perfectly, what’s different in 12 months?","For you, and for a client. This tells us what we’re really building toward.")+
-  fldArea("The 12-month picture","ambition","e.g. “Bina is the first name people in Amman think of for turnkey interiors, and we’re turning down work we’d once have chased.”");
-}
-function renderNotes(){
-  return head("Anything else we should know?","Anything at all — a story, a constraint, a worry, a dream. Optional.")+
-  fldArea("Notes","notes","Leave blank if nothing comes to mind.");
-}
-function renderReview(){
-  function row(k,v){ var e = (!v||!v.trim())?' empty':''; return '<div class="row"><div class="k">'+k+'</div><div class="v'+e+'">'+(e?'—':esc(v))+'</div></div>'; }
-  var dir = dirPairs.map(function(p,idx){ return state.dir[idx]?(p.label+': '+state.dir[idx]):null; }).filter(Boolean).join('\n');
-  var voice = voicePairs.map(function(p,idx){ return state.voice[idx]?(p.label+': '+state.voice[idx]):null; }).filter(Boolean).join(' · ');
-  var html = head("Here’s what we heard.","Read it back. Edit anything by stepping back — then send. We take it from here.");
-  html += '<div class="rev">'+
-    row("Company", state.company)+ row("Contact", state.contact)+ row("Email", state.email)+
-    row("The one client", state.audience)+ row("The feeling", state.feeling)+
-    row("Direction", dir)+ row("Brands loved", state.brands_loved)+ row("Can’t stand", state.brand_disliked)+
-    row("Character", state.adjectives.join(", "))+ row("Anti-brand", state.antibrand)+
-    row("Voice", voice + (state.voice_note?(' — “'+state.voice_note+'”'):''))+
-    row("12-month ambition", state.ambition)+ row("Notes", state.notes)+
-  '</div><div class="err" id="submitErr"></div>';
+  html+='</div>';
+  if(s.noteKey) html+=fldArea(s.noteLabel,s.noteKey,s.notePh,400);
   return html;
 }
+function renderChips(s){
+  var html='<div class="chips">';
+  s.options.forEach(function(w){ html+='<span class="chip'+((state[s.key]||[]).indexOf(w)>-1?' sel':'')+'" data-chip="'+s.key+'" data-val="'+esc(w)+'">'+w+'</span>'; });
+  html+='</div><div class="counter" id="chipCount" data-min="'+(s.min||0)+'" data-max="'+(s.max||99)+'"></div>';
+  if(s.textKey){ if(s.textArea) html+=fldArea(s.textLabel,s.textKey,s.textPh,800); else html+=fldInput(s.textLabel,s.textKey,'text',s.textPh,200); }
+  return html;
+}
+function renderCheckpoint(s){
+  var n=s.tier; var next=TIERS[n+1];
+  return '<div class="check">'+
+    '<div class="seal">صفر</div>'+
+    '<div class="eyebrow" style="display:inline-block">Part '+n+' received</div>'+
+    '<h1>Part '+n+' is in. We’re already on it.</h1>'+
+    '<p class="lede">We’ve got everything from <strong style="color:var(--pearl);font-weight:400">'+TIERS[n].name+'</strong> and we’re starting work on it now. '+(next?'Keep going — Part '+(n+1)+', '+next.name+', is next.':'')+'</p>'+
+  '</div>'+nav(s);
+}
 function renderDone(){
-  return '<div class="done" id="doneBox"><div class="spinner"></div><div class="big" style="opacity:.5">Sending…</div></div>';
+  return '<div class="done" id="doneBox"><div class="spinner"></div><div class="big" style="opacity:.5">Sending the last part…</div></div>';
+}
+function nav(s){
+  if(s.kind==="done") return '';
+  var backHidden = (idx===0)?' disabled':'';
+  var label;
+  if(s.kind==="welcome") label="Begin";
+  else if(s.kind==="checkpoint"){ label = (s.tier<4? "Continue to Part "+(s.tier+1)+" →" : "Finish →"); }
+  else { var nx=FLOW[idx+1]; label = (nx && nx.kind==="checkpoint") ? "Send Part "+s.tier+" →" : "Next"; }
+  return '<div class="nav"><button class="ghost" id="back"'+backHidden+'>← Back</button><button class="primary" id="next">'+label+'</button></div><div class="err" id="err"></div>';
 }
 
-/* ============== HELPERS ============== */
-function head(title, lede){ var n = String(i).padStart(2,'0'); return '<div class="eyebrow">Identity &amp; Brand Core</div><h1><span class="num">'+n+'</span>'+title+'</h1>'+(lede?'<p class="lede">'+lede+'</p>':''); }
-function fld(q,key,type,ph){ return '<label class="fld"><span class="q">'+q+'</span><input type="'+type+'" data-key="'+key+'" value="'+esc(state[key])+'" placeholder="'+esc(ph)+'" maxlength="200" autocomplete="off" /></label>'; }
-function fldArea(q,key,ph){ return '<label class="fld"><span class="q">'+q+'</span><textarea data-key="'+key+'" placeholder="'+esc(ph)+'" maxlength="1600">'+esc(state[key])+'</textarea></label>'; }
-
-/* ============== RENDER + WIRE ============== */
+/* ================= SHOW + WIRE ================= */
 function show(){
-  var main = document.getElementById('main');
-  main.innerHTML = '<div class="step active">'+ steps[i].render() +'</div>'+ navHTML();
-  document.getElementById('stepName').textContent = steps[i].name;
-  document.getElementById('stepCount').textContent = (i< steps.length-1? 'Step '+(i+1)+' / '+(steps.length-1) : 'Complete');
-  document.getElementById('barfill').style.width = Math.round(i/(steps.length-1)*100)+'%';
+  var s = FLOW[idx];
+  document.getElementById('main').innerHTML = '<div class="step">'+renderStep()+'</div>';
+  // header / progress
+  var tier = curTier();
+  document.getElementById('tagref').innerHTML = 'Brand Ecosystem Intake<br>Part '+String(tier).padStart(2,'0')+' / 04 · for Bina';
+  document.getElementById('stepName').textContent = s.kind==="welcome"?"Welcome":(s.kind==="checkpoint"?("Part "+s.tier+" complete"):(s.kind==="done"?"Complete":s.name));
+  document.getElementById('stepCount').textContent = s.kind==="done"?"Complete":("Part "+tier+" / 4");
+  document.getElementById('barfill').style.width = Math.round(idx/(FLOW.length-1)*100)+'%';
+  renderPips(tier, s.kind);
   window.scrollTo({top:0,behavior:'smooth'});
+  persist();
   wire();
-  if(i===steps.length-1){ submit(); }
+  if(s.kind==="checkpoint") submitTier(s.tier);
+  if(s.kind==="done"){ submitTier(4); finishDone(); }
 }
-function navHTML(){
-  if(i===steps.length-1) return '';
-  var backHidden = i===0 ? ' disabled':'';
-  var nextLabel = i===0 ? 'Begin' : (i===steps.length-2 ? 'Send to CIFFR' : 'Next');
-  return '<div class="nav">'+
-    '<button class="ghost" id="back"'+backHidden+'>← Back</button>'+
-    '<button class="primary" id="next">'+nextLabel+'</button>'+
-  '</div><div class="err" id="err"></div>';
+function renderPips(tier, kind){
+  var html='';
+  for(var t=1;t<=4;t++){ var cls = submitted[t]?'pip done':(t===tier && kind!=="done" ?'pip cur':'pip'); if(kind==="done") cls='pip done'; html+='<div class="'+cls+'"></div>'; }
+  document.getElementById('pips').innerHTML = html;
 }
 function wire(){
-  Array.prototype.forEach.call(document.querySelectorAll('[data-key]'), function(el){
-    el.addEventListener('input', function(){ state[el.getAttribute('data-key')] = el.value; persist(); });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-key]'), function(el){ el.addEventListener('input', function(){ state[el.getAttribute('data-key')]=el.value; persist(); }); });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-pair]'), function(el){
+    el.addEventListener('click', function(){ var k=el.getAttribute('data-pair'), pi=el.getAttribute('data-pi'); state[k]=state[k]||{}; state[k][pi]=el.getAttribute('data-val');
+      el.parentNode.querySelectorAll('.opt').forEach(function(g){g.classList.remove('sel');}); el.classList.add('sel'); persist(); });
   });
-  Array.prototype.forEach.call(document.querySelectorAll('[data-dir]'), function(el){
-    el.addEventListener('click', function(){
-      var idx = el.getAttribute('data-dir'); state.dir[idx] = el.getAttribute('data-val');
-      el.parentNode.querySelectorAll('.opt').forEach(function(g){g.classList.remove('sel');}); el.classList.add('sel'); persist();
-    });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-chip]'), function(el){
+    el.addEventListener('click', function(){ var k=el.getAttribute('data-chip'), v=el.getAttribute('data-val'); state[k]=state[k]||[];
+      var s=FLOW[idx]; var max=s.max||99; var i=state[k].indexOf(v);
+      if(i>-1){ state[k].splice(i,1); el.classList.remove('sel'); }
+      else { if(state[k].length>=max){ flashChip("Up to "+max+" — remove one first."); return; } state[k].push(v); el.classList.add('sel'); }
+      updChip(); persist(); });
   });
-  Array.prototype.forEach.call(document.querySelectorAll('[data-voice]'), function(el){
-    el.addEventListener('click', function(){
-      var idx = el.getAttribute('data-voice'); state.voice[idx] = el.getAttribute('data-val');
-      el.parentNode.querySelectorAll('.opt').forEach(function(g){g.classList.remove('sel');}); el.classList.add('sel'); persist();
-    });
-  });
-  Array.prototype.forEach.call(document.querySelectorAll('[data-adj]'), function(el){
-    el.addEventListener('click', function(){
-      var w = el.getAttribute('data-adj'); var k = state.adjectives.indexOf(w);
-      if(k>-1){ state.adjectives.splice(k,1); el.classList.remove('sel'); }
-      else { if(state.adjectives.length>=5){ flashAdj(); return; } state.adjectives.push(w); el.classList.add('sel'); }
-      updAdjCount(); persist();
-    });
-  });
-  updAdjCount();
-  var nb = document.getElementById('next'); if(nb) nb.addEventListener('click', next);
-  var bb = document.getElementById('back'); if(bb && !bb.disabled) bb.addEventListener('click', back);
+  updChip();
+  var nb=document.getElementById('next'); if(nb) nb.addEventListener('click', next);
+  var bb=document.getElementById('back'); if(bb && !bb.disabled) bb.addEventListener('click', back);
 }
-function updAdjCount(){ var c = document.getElementById('adjCount'); if(c){ var n=state.adjectives.length; c.textContent = n+' selected'+(n<3?' — pick at least 3':' ✓'); c.style.color = n>=3?'#7fc79b':'var(--muted)'; } }
-function flashAdj(){ var c=document.getElementById('adjCount'); if(c){ c.textContent='Keep it to 5 — remove one first.'; c.style.color='#e8917e'; } }
-function err(msg){ var e=document.getElementById('err'); if(e){ e.textContent=msg||''; } }
+function updChip(){ var c=document.getElementById('chipCount'); if(!c) return; var s=FLOW[idx]; var n=(state[s.key]||[]).length; var min=s.min||0; c.textContent=n+' selected'+(min&&n<min?' — pick at least '+min:(n?' ✓':'')); c.style.color=(min===0||n>=min)?'#7fc79b':'var(--muted)'; }
+function flashChip(msg){ var c=document.getElementById('chipCount'); if(c){ c.textContent=msg; c.style.color='#e8917e'; } }
+function err(m){ var e=document.getElementById('err'); if(e) e.textContent=m||''; }
 
-/* ============== NAV LOGIC ============== */
+/* ================= NAV ================= */
 function validate(){
-  err('');
-  if(i===1){
-    if(!state.company.trim()) return err('A name for the company or project, please.'), false;
-    if(!state.contact.trim()) return err('Your name, please.'), false;
-    if(!state.email.trim() || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(state.email)) return err('A valid email so we can reach you.'), false;
-  }
-  if(i===6 && state.adjectives.length<3){ return err('Pick at least 3 words.'), false; }
+  err(''); var s=FLOW[idx]; if(s.kind!=="q") return true;
+  if(s.type==="fields"){ for(var i=0;i<s.items.length;i++){ var it=s.items[i]; if(it.req && !String(state[it.key]||'').trim()){ err("Please fill: "+it.label.replace(/ —.*/,'')); return false; } if(it.inputType==="email" && state[it.key] && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(state[it.key])){ err("A valid email, please."); return false; } } }
+  if(s.type==="chips" && s.min){ if((state[s.key]||[]).length < s.min){ err("Pick at least "+s.min+"."); return false; } }
   return true;
 }
-function next(){ if(!validate()) return; if(i<steps.length-1){ i++; show(); } }
-function back(){ if(i>0){ i--; show(); } }
+function next(){ if(!validate()) return; if(idx<FLOW.length-1){ idx++; show(); } }
+function back(){ if(idx>0){ idx--; show(); } }
 
-/* ============== SUBMIT ============== */
-function payload(){
-  function dash(v){ return (v && v.trim())? v.trim() : "—"; }
-  var dir = dirPairs.map(function(p,idx){ return state.dir[idx]?(p.label+': '+state.dir[idx]):null; }).filter(Boolean).join(' | ');
-  var voice = voicePairs.map(function(p,idx){ return state.voice[idx]?(p.label+': '+state.voice[idx]):null; }).filter(Boolean).join(' | ');
-  if(state.voice_note && state.voice_note.trim()) voice += (voice?' | ':'')+'Phrase: "'+state.voice_note.trim()+'"';
-  return {
-    company: dash(state.company), contact: dash(state.contact), email: dash(state.email),
-    audience: dash(state.audience), feeling: dash(state.feeling),
-    direction_picks: dash(dir), brands_loved: dash(state.brands_loved), brand_disliked: dash(state.brand_disliked),
-    adjectives: dash(state.adjectives.join(", ")), antibrand: dash(state.antibrand),
-    voice: dash(voice), ambition: dash(state.ambition), notes: dash(state.notes)
-  };
+/* ================= SUMMARISE + SUBMIT ================= */
+function summarize(tier){
+  var lines=[];
+  FLOW.forEach(function(s){
+    if(s.kind!=="q" || s.tier!==tier) return;
+    if(s.type==="fields"){ s.items.forEach(function(it){ if(it.key==="email"||it.key==="company"||it.key==="contact") return; lines.push(it.label+": "+dash(state[it.key])); }); }
+    else if(s.type==="area"){ lines.push((s.sum||s.name)+": "+dash(state[s.key])); }
+    else if(s.type==="areas"){ s.items.forEach(function(it){ lines.push(it.label+": "+dash(state[it.key])); }); }
+    else if(s.type==="pairs"){ var parts=s.pairs.map(function(p,i){ var v=(state[s.key]||{})[i]; return v?(p.label+" → "+v):null; }).filter(Boolean); lines.push((s.sum||s.name)+": "+(parts.length?parts.join("; "):"—")); if(s.noteKey && String(state[s.noteKey]||'').trim()) lines.push("Phrase: "+state[s.noteKey].trim()); }
+    else if(s.type==="chips"){ var picks=(state[s.key]||[]).join(", "); var extra=(s.textKey && String(state[s.textKey]||'').trim())?(" | "+s.textLabel+": "+state[s.textKey].trim()):""; lines.push((s.sum||s.name)+": "+(picks||"—")+extra); }
+  });
+  return lines.join("\n");
 }
-function submit(){
-  var body = new URLSearchParams(payload()).toString();
-  var finished = false;
-  function done(ok){
-    if(finished) return; finished = true;
-    var box = document.getElementById('doneBox');
-    if(ok){
-      try{ localStorage.removeItem(STORE_KEY); }catch(e){}
-      box.innerHTML = '<div class="ar">صفر</div><div class="big">Thank you.</div>'+
-        '<p>That’s everything we need to start. We’re already getting to work on Bina’s identity — you’ll hear from us shortly.</p>'+
-        '<p style="margin-top:14px;color:var(--muted);font-size:13px">You can close this page. Tier 2 will reach you when we’re ready for it.</p>';
-      document.getElementById('barfill').style.width='100%';
-      document.getElementById('stepCount').textContent='Complete';
-    } else {
-      box.innerHTML = '<div class="big" style="font-size:28px">Almost there.</div>'+
-        '<p>We couldn’t reach our server just now. Your answers are saved on this device — please check your connection and try again.</p>'+
-        '<button class="primary" style="margin-top:20px" onclick="i=steps.length-2;show();">Back to review</button>';
-    }
+function chunkText(text, size, n){
+  var out=[]; var s=String(text||"");
+  while(s.length>size && out.length<n-1){
+    var cut=s.lastIndexOf("\n", size); if(cut < size*0.5) cut=size;
+    out.push(s.slice(0,cut)); s=s.slice(cut).replace(/^\n+/,"");
   }
-  fetch(WEBHOOK_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'}, body: body })
-    .then(function(){ done(true); }).catch(function(){ done(false); });
-  setTimeout(function(){ if(!finished) done(true); }, 6000);
+  out.push(s.slice(0,size));
+  while(out.length<n) out.push(" ");
+  return out.map(function(c){ return (c && c.length)? c : " "; });
+}
+function postWebhook(data){
+  var body=new URLSearchParams(data).toString();
+  return fetch(WEBHOOK_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},body:body});
+}
+function submitTier(tier){
+  if(submitted[tier]) return; submitted[tier]=true; persist();
+  var chunks=chunkText(summarize(tier),1900,4);
+  postWebhook({ company:dash(state.company), contact:dash(state.contact), email:dash(state.email), tier:TIERS[tier].label,
+    summary1:chunks[0], summary2:chunks[1], summary3:chunks[2], summary4:chunks[3] });
+}
+function finishDone(){
+  var box=document.getElementById('doneBox'); if(!box) return;
+  setTimeout(function(){
+    try{ localStorage.removeItem(STORE_KEY); }catch(e){}
+    box.innerHTML='<div class="ar">صفر</div><div class="big">Thank you.</div>'+
+      '<p>That’s all four parts — identity, services, operations, and growth. We have everything we need, and we’re already building. You’ll hear from us soon.</p>'+
+      '<p style="margin-top:14px;color:var(--muted);font-size:13px">You can close this page.</p>';
+    document.getElementById('barfill').style.width='100%';
+    renderPips(4,"done");
+  }, 900);
 }
 
-/* ============== CIPHER FIELD (duotone, contrast-aware) ============== */
+/* ================= CIPHER FIELD ================= */
 (function(){
-  var nums = ["٠","١","٢","٣","٤","٥","٦","٧","٨","٩"];
-  var c = document.getElementById('cipher');
-  var W = window.innerWidth, H = window.innerHeight;
-  var count = W<560?34:64;
-  // focal point the field thins toward (upper-right, visible beside the panel)
-  var fx = 0.84, fy = 0.30;
+  var nums=["٠","١","٢","٣","٤","٥","٦","٧","٨","٩"];
+  var c=document.getElementById('cipher'); var W=window.innerWidth,H=window.innerHeight; var count=W<560?34:64;
+  var fx=0.84, fy=0.30;
   for(var k=0;k<count;k++){
-    var x = Math.random(), y = Math.random();
-    var t = (x + y) / 2;                       // 0 = dark corner, 1 = light corner
-    var dist = Math.sqrt(Math.pow(x-fx,2)+Math.pow(y-fy,2)); // 0..~1.2
-    var near = Math.max(0, 1 - dist/0.9);      // 1 near focal, 0 far
-    var s = document.createElement('span');
-    s.textContent = nums[Math.floor(Math.random()*10)];
-    var size = (12 + Math.random()*46) * (1 - near*0.55);   // smaller near focal
-    s.style.fontSize = size.toFixed(1)+'px';
-    s.style.left = (x*100)+'%'; s.style.top = (y*100)+'%';
-    s.style.transform = 'rotate('+(Math.random()*40-20).toFixed(1)+'deg)';
-    // contrast-aware colour: light numerals on the dark side, dark on the light side, forest sprinkled
-    var col, op;
-    var roll = Math.random();
-    if(roll < 0.16){ col = '44,107,71'; op = 0.20; }              // forest accent
-    else if(t < 0.5){ col = '243,244,241'; op = 0.13; }           // pearl on dark
-    else { col = '22,25,28'; op = 0.12; }                          // onyx on light
-    op = op * (1 - near*0.6);                                      // fade toward focal
-    s.style.color = 'rgba('+col+','+op.toFixed(3)+')';
-    c.appendChild(s);
+    var x=Math.random(), y=Math.random(); var t=(x+y)/2;
+    var dist=Math.sqrt(Math.pow(x-fx,2)+Math.pow(y-fy,2)); var near=Math.max(0,1-dist/0.9);
+    var s=document.createElement('span'); s.textContent=nums[Math.floor(Math.random()*10)];
+    var size=(12+Math.random()*46)*(1-near*0.55); s.style.fontSize=size.toFixed(1)+'px';
+    s.style.left=(x*100)+'%'; s.style.top=(y*100)+'%'; s.style.transform='rotate('+(Math.random()*40-20).toFixed(1)+'deg)';
+    var col,op,roll=Math.random();
+    if(roll<0.16){ col='44,107,71'; op=0.20; } else if(t<0.5){ col='243,244,241'; op=0.13; } else { col='22,25,28'; op=0.12; }
+    op=op*(1-near*0.6); s.style.color='rgba('+col+','+op.toFixed(3)+')'; c.appendChild(s);
   }
-  // faint key-lines threading to the focal point (CIFFR signature)
-  var svg = document.getElementById('keyline');
-  svg.setAttribute('viewBox','0 0 '+W+' '+H);
-  var px = fx*W, py = fy*H;
-  var starts = [[0,H*0.15],[W*0.12,H],[0,H*0.62],[W*0.55,H]];
-  var lines='';
-  starts.forEach(function(p){ lines += '<line x1="'+p[0]+'" y1="'+p[1]+'" x2="'+px+'" y2="'+py+'" stroke="rgba(44,107,71,0.10)" stroke-width="1"/>'; });
-  svg.innerHTML = lines + '<rect x="'+(px-7)+'" y="'+(py-7)+'" width="14" height="14" rx="4" transform="rotate(-9 '+px+' '+py+')" fill="rgba(44,107,71,0.45)"/>';
+  var svg=document.getElementById('keyline'); svg.setAttribute('viewBox','0 0 '+W+' '+H);
+  var px=fx*W, py=fy*H; var starts=[[0,H*0.15],[W*0.12,H],[0,H*0.62],[W*0.55,H]]; var lines='';
+  starts.forEach(function(p){ lines+='<line x1="'+p[0]+'" y1="'+p[1]+'" x2="'+px+'" y2="'+py+'" stroke="rgba(44,107,71,0.10)" stroke-width="1"/>'; });
+  svg.innerHTML=lines+'<rect x="'+(px-7)+'" y="'+(py-7)+'" width="14" height="14" rx="4" transform="rotate(-9 '+px+' '+py+')" fill="rgba(44,107,71,0.45)"/>';
 })();
 
-/* ============== BOOT ============== */
+/* ================= BOOT ================= */
 show();
 </script>
 </body>
