@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bina × CIFFR — Identity Intake</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Sora:wght@300;400;500;600&family=Reem+Kufi:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --onyx:#16191C; --pearl:#F3F4F1; --silver:#DEDED7; --steel:#C7CAC2;
+    --forest:#1E5631; --forest-rev:#2C6B47;
+    --panel:rgba(18,21,24,0.66); --panel-line:rgba(243,244,241,0.12);
+    --onyx-2:rgba(255,255,255,0.045); --line:rgba(243,244,241,0.13); --muted:rgba(243,244,241,0.56);
+    --display:"Fraunces",Georgia,serif; --body:"Sora",system-ui,sans-serif; --arab:"Reem Kufi",sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    color:var(--pearl); font-family:var(--body); font-weight:300; line-height:1.55;
+    -webkit-font-smoothing:antialiased; min-height:100vh; position:relative; overflow-x:hidden;
+    /* duotone blend: onyx (top-left) → steel (bottom-right) */
+    background:linear-gradient(135deg,#14171A 0%, #1c2125 32%, #444c54 60%, #aeb2ac 84%, #C7CAC2 100%);
+    background-attachment:fixed;
+  }
+  /* cipher field — scattered eastern numerals across the blend */
+  .cipher{position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden}
+  .cipher span{position:absolute; font-family:var(--arab); user-select:none; line-height:1}
+  .keyline{position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.5}
+
+  .wrap{position:relative; z-index:1; max-width:812px; margin:0 auto; padding:40px 22px 30px}
+
+  /* frosted content panel floating over the blend */
+  .panel{
+    background:var(--panel); border:1px solid var(--panel-line); border-radius:22px;
+    padding:30px 40px 38px; backdrop-filter:blur(18px) saturate(1.05); -webkit-backdrop-filter:blur(18px) saturate(1.05);
+    box-shadow:0 30px 80px -30px rgba(0,0,0,0.6), 0 2px 0 rgba(255,255,255,0.04) inset;
+  }
+
+  header{display:flex; align-items:center; justify-content:space-between; gap:14px}
+  .brand{display:flex; align-items:center; gap:11px}
+  .mark{width:17px; height:17px; background:var(--forest-rev); border-radius:5px; transform:rotate(-9deg); display:inline-block; box-shadow:0 0 0 4px rgba(44,107,71,0.12)}
+  .wordmark{font-family:var(--display); font-weight:500; font-size:22px; letter-spacing:.5px}
+  .tagref{font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); text-align:right}
+
+  .progress{margin:30px 0 8px}
+  .progress .meta{display:flex; justify-content:space-between; font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); margin-bottom:10px}
+  .bar{height:2px; background:var(--line); border-radius:2px; overflow:hidden}
+  .bar i{display:block; height:100%; width:0; background:var(--forest-rev); transition:width .5s cubic-bezier(.4,0,.2,1)}
+
+  main{padding:18px 0 6px; min-height:48vh}
+  .step{display:none; animation:rise .55s cubic-bezier(.2,.7,.2,1)}
+  .step.active{display:block}
+  @keyframes rise{from{opacity:0; transform:translateY(14px)} to{opacity:1; transform:none}}
+  .eyebrow{font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:#7fc79b; margin-bottom:16px}
+  h1{font-family:var(--display); font-weight:500; font-size:34px; line-height:1.15; letter-spacing:-.2px; margin-bottom:14px}
+  h1 .num{color:var(--muted); font-size:24px; vertical-align:super; margin-right:8px}
+  .lede{color:var(--silver); font-size:16.5px; max-width:62ch; margin-bottom:26px; font-weight:300}
+  .hint{color:var(--muted); font-size:13.5px; margin-top:8px}
+
+  label.fld{display:block; margin:18px 0}
+  label.fld .q{display:block; font-size:14px; color:var(--pearl); margin-bottom:9px; font-weight:400}
+  input[type=text],input[type=email],textarea{
+    width:100%; background:var(--onyx-2); border:1px solid var(--line); color:var(--pearl);
+    font-family:var(--body); font-size:15.5px; font-weight:300; padding:14px 15px; border-radius:10px;
+    transition:border-color .2s, background .2s; resize:vertical;
+  }
+  textarea{min-height:108px; line-height:1.5}
+  input:focus,textarea:focus{outline:none; border-color:var(--forest-rev); background:rgba(255,255,255,0.07)}
+  ::placeholder{color:rgba(243,244,241,0.32)}
+
+  .pairs{display:grid; gap:18px; margin-top:6px}
+  .pair .plabel{font-size:13px; color:var(--muted); margin-bottom:9px; letter-spacing:.04em}
+  .opts{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+  .opt{border:1px solid var(--line); background:var(--onyx-2); border-radius:12px; padding:15px 16px; cursor:pointer; transition:.18s; user-select:none}
+  .opt:hover{border-color:rgba(243,244,241,0.32)}
+  .opt .ot{font-family:var(--display); font-size:17px; font-weight:500; margin-bottom:3px}
+  .opt .od{font-size:12.5px; color:var(--muted); line-height:1.4}
+  .opt.sel{border-color:var(--forest-rev); background:rgba(44,107,71,0.22)}
+  .opt.sel .ot{color:#bfe3cd}
+
+  .chips{display:flex; flex-wrap:wrap; gap:10px; margin-top:4px}
+  .chip{border:1px solid var(--line); background:var(--onyx-2); color:var(--silver); padding:9px 16px; border-radius:999px; cursor:pointer; font-size:14px; transition:.16s; user-select:none}
+  .chip:hover{border-color:rgba(243,244,241,0.34)}
+  .chip.sel{background:var(--forest); border-color:var(--forest); color:#eaf5ee}
+  .counter{font-size:12.5px; color:var(--muted); margin-top:12px}
+
+  .nav{display:flex; align-items:center; justify-content:space-between; margin-top:34px; gap:14px}
+  button{font-family:var(--body); cursor:pointer; border:none; font-size:14.5px; transition:.18s}
+  .ghost{background:transparent; color:var(--muted); padding:13px 6px}
+  .ghost:hover{color:var(--pearl)}
+  .ghost[disabled]{opacity:0; pointer-events:none}
+  .primary{background:var(--forest); color:#eaf5ee; padding:13px 30px; border-radius:10px; font-weight:500; letter-spacing:.02em}
+  .primary:hover{background:var(--forest-rev)}
+  .primary[disabled]{opacity:.4; pointer-events:none}
+  .err{color:#e8917e; font-size:13px; margin-top:12px; min-height:18px}
+
+  .rev{border:1px solid var(--line); border-radius:12px; overflow:hidden; margin-top:6px}
+  .rev .row{display:flex; gap:14px; padding:13px 16px; border-bottom:1px solid var(--line); font-size:14px}
+  .rev .row:last-child{border-bottom:none}
+  .rev .k{flex:0 0 150px; color:var(--muted); font-size:12.5px; text-transform:uppercase; letter-spacing:.1em; padding-top:2px}
+  .rev .v{flex:1; color:var(--pearl); white-space:pre-wrap; font-weight:300}
+  .rev .v.empty{color:rgba(243,244,241,0.3)}
+
+  .done{text-align:center; padding:34px 0}
+  .done .big{font-family:var(--display); font-size:40px; font-weight:500; margin:22px 0 10px}
+  .done p{color:var(--silver); max-width:46ch; margin:0 auto 6px}
+  .done .ar{font-family:var(--arab); color:#8fd4ab; font-size:34px; margin-top:18px; letter-spacing:.1em}
+  .spinner{width:34px;height:34px;border:2px solid var(--line);border-top-color:var(--forest-rev);border-radius:50%;margin:0 auto;animation:spin .8s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  footer{position:relative; z-index:1; text-align:center; color:rgba(22,25,28,0.6); font-size:11px; letter-spacing:.12em; text-transform:uppercase; padding:22px 0 6px; text-shadow:0 1px 0 rgba(255,255,255,0.18)}
+  @media(max-width:560px){
+    .panel{padding:24px 22px 30px; border-radius:18px}
+    h1{font-size:27px} .lede{font-size:15px} .opts{grid-template-columns:1fr}
+    .rev .row{flex-direction:column; gap:5px} .rev .k{flex-basis:auto}
+    .wrap{padding:26px 16px 24px}
+  }
+</style>
+</head>
+<body>
+<div class="cipher" id="cipher" aria-hidden="true"></div>
+<svg class="keyline" id="keyline" aria-hidden="true" preserveAspectRatio="none"></svg>
+
+<div class="wrap">
+  <div class="panel">
+    <header>
+      <div class="brand"><span class="mark"></span><span class="wordmark">ciffr</span></div>
+      <div class="tagref">Identity Intake · 01 / 04<br>for Bina</div>
+    </header>
+
+    <div class="progress">
+      <div class="meta"><span id="stepName">Welcome</span><span id="stepCount">Step 1</span></div>
+      <div class="bar"><i id="barfill"></i></div>
+    </div>
+
+    <main id="main"><!-- steps injected --></main>
+  </div>
+
+  <footer>Built by CIFFR · Start at zero. Don't stay there.</footer>
+</div>
+
+<script>
+/* ============== CONFIG ============== */
+var WEBHOOK_URL = "https://hook.us2.make.com/mn0i853hb3v196shjtm14grxca5csbvv";
+var STORE_KEY = "bina_tier1_v1";
+
+/* ============== STATE ============== */
+var state = {
+  company:"", contact:"", email:"",
+  audience:"", feeling:"",
+  dir:{}, brands_loved:"", brand_disliked:"",
+  adjectives:[], antibrand:"",
+  voice:{}, voice_note:"",
+  ambition:"", notes:""
+};
+try{ var saved = localStorage.getItem(STORE_KEY); if(saved){ state = Object.assign(state, JSON.parse(saved)); } }catch(e){}
+function persist(){ try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }catch(e){} }
+
+/* ============== STEP DATA ============== */
+var dirPairs = [
+  {label:"Material & feel", a:{t:"Warm & natural", d:"Oak, linen, stone, soft light"}, b:{t:"Cool & architectural", d:"Concrete, steel, glass, hard edges"}},
+  {label:"Expression", a:{t:"Minimal & quiet", d:"Restraint, space, calm"}, b:{t:"Bold & expressive", d:"Statement, drama, presence"}},
+  {label:"Time", a:{t:"Timeless & classic", d:"Built to outlast trends"}, b:{t:"Modern & cutting-edge", d:"Of-the-moment, forward"}},
+  {label:"Craft", a:{t:"Handcrafted & artisanal", d:"The mark of the maker"}, b:{t:"Precise & engineered", d:"Machined, exact, flawless"}}
+];
+var voicePairs = [
+  {label:"Wording", a:{t:"Plain & direct", d:"Few words, said well"}, b:{t:"Rich & descriptive", d:"Texture and detail"}},
+  {label:"Posture", a:{t:"Expert & authoritative", d:"We know our craft"}, b:{t:"Warm & approachable", d:"We're easy to work with"}}
+];
+var adjList = ["calm","bold","warm","precise","playful","premium","raw","friendly","serious","quiet","crafted","modern","timeless","technical","artisanal"];
+
+var steps = [
+  {name:"Welcome", render:renderWelcome},
+  {name:"Who you are", render:renderBasics},
+  {name:"The one client", render:renderAudience},
+  {name:"The feeling", render:renderFeeling},
+  {name:"Direction", render:renderDirection},
+  {name:"References", render:renderRefs},
+  {name:"Character", render:renderAdjectives},
+  {name:"The anti-brand", render:renderAnti},
+  {name:"The voice", render:renderVoice},
+  {name:"The ambition", render:renderAmbition},
+  {name:"Anything else", render:renderNotes},
+  {name:"Review", render:renderReview},
+  {name:"Done", render:renderDone}
+];
+var i = 0;
+
+/* ============== RENDERERS ============== */
+function esc(s){ return (s||"").replace(/[<>&]/g,function(c){return {'<':'&lt;','>':'&gt;','&':'&amp;'}[c];}); }
+
+function renderWelcome(){
+  return '<div class="eyebrow">Bina × CIFFR · Tier 1 of 4 — Identity &amp; Brand Core</div>'+
+  '<h1>You don’t need to have this figured out.</h1>'+
+  '<p class="lede">That’s exactly what we’re for. We’re not going to hand you a 40-question brief. We’ll show you things and ask you to react — and from your reactions, we build the brand. If something’s wrong, just say so. Getting it wrong on the way is how we find what’s right.</p>'+
+  '<p class="lede" style="margin-bottom:6px">This is the first of four short passes. Each one quietly unlocks a part of the work, so by the time you finish one, we’ve already started. This pass takes about <strong style="color:var(--pearl);font-weight:400">7–10 minutes</strong>. Your progress saves automatically.</p>'+
+  '<div class="hint">Nothing here is a test. There are no wrong answers — only useful ones.</div>';
+}
+function renderBasics(){
+  return head("Who you are","A couple of details so we know whose brand we’re building.")+
+  fld("Company / project name","company","text","e.g. Bina")+
+  fld("Your name","contact","text","Who we’ll be working with")+
+  fld("Email","email","email","Where we send updates");
+}
+function renderAudience(){
+  return head("Picture one real client.","Not a “target market” — one actual person who would love what you do. Who are they, and what are they trying to build?")+
+  fldArea("The one client","audience","A villa owner in Abdoun renovating their home; a developer fitting out an office; a restaurant owner who wants something custom…");
+}
+function renderFeeling(){
+  return head("When someone meets Bina, what’s the one feeling?","Or the one action you want them to take. Just the single most important one.")+
+  fldArea("The feeling or action","feeling","e.g. “They feel their project is in expert hands and stop shopping around.”");
+}
+function renderDirection(){
+  var h = head("Which way does Bina lean?","Pick the side of each pair that feels closer. There’s no right answer — and you can lean only slightly.");
+  var html='<div class="pairs">';
+  dirPairs.forEach(function(p,idx){
+    var sa = state.dir[idx]===p.a.t?' sel':''; var sb = state.dir[idx]===p.b.t?' sel':'';
+    html+='<div class="pair"><div class="plabel">'+p.label+'</div><div class="opts">'+
+      '<div class="opt'+sa+'" data-dir="'+idx+'" data-val="'+esc(p.a.t)+'"><div class="ot">'+p.a.t+'</div><div class="od">'+p.a.d+'</div></div>'+
+      '<div class="opt'+sb+'" data-dir="'+idx+'" data-val="'+esc(p.b.t)+'"><div class="ot">'+p.b.t+'</div><div class="od">'+p.b.d+'</div></div>'+
+      '</div></div>';
+  });
+  return h+html+'</div>';
+}
+function renderRefs(){
+  return head("Show us your taste.","Brands you love can be from any industry — a car, a hotel, a fashion label. We’re not after the look; we’re after why you love them.")+
+  fldArea("3 brands you love — and why","brands_loved","1. … because …\n2. … because …\n3. … because …")+
+  fldArea("1 brand you can’t stand — and why","brand_disliked","… because …");
+}
+function renderAdjectives(){
+  var h = head("Pick the words that fit Bina.","Choose 3 to 5. Tap to select, tap again to remove. The ones you leave behind tell us just as much.");
+  var html='<div class="chips">';
+  adjList.forEach(function(w){ var s = state.adjectives.indexOf(w)>-1?' sel':''; html+='<span class="chip'+s+'" data-adj="'+w+'">'+w+'</span>'; });
+  return h+html+'</div><div class="counter" id="adjCount"></div>';
+}
+function renderAnti(){
+  return head("Now the version you’d hate.","Subtraction is easier than creation — and just as revealing. Describe the Bina that would make you cringe.")+
+  fldArea("The anti-brand","antibrand","What would make you cringe? Cheap? Loud? Generic? Trying too hard? Tell us what to stay away from.");
+}
+function renderVoice(){
+  var h = head("How should Bina speak?","Same idea — lean toward the side that fits.");
+  var html='<div class="pairs">';
+  voicePairs.forEach(function(p,idx){
+    var sa = state.voice[idx]===p.a.t?' sel':''; var sb = state.voice[idx]===p.b.t?' sel':'';
+    html+='<div class="pair"><div class="plabel">'+p.label+'</div><div class="opts">'+
+      '<div class="opt'+sa+'" data-voice="'+idx+'" data-val="'+esc(p.a.t)+'"><div class="ot">'+p.a.t+'</div><div class="od">'+p.a.d+'</div></div>'+
+      '<div class="opt'+sb+'" data-voice="'+idx+'" data-val="'+esc(p.b.t)+'"><div class="ot">'+p.b.t+'</div><div class="od">'+p.b.d+'</div></div>'+
+      '</div></div>';
+  });
+  return h+html+'</div>'+fldArea("A phrase you already use about Bina (optional)","voice_note","The best taglines are usually something the founder already said.");
+}
+function renderAmbition(){
+  return head("If this works perfectly, what’s different in 12 months?","For you, and for a client. This tells us what we’re really building toward.")+
+  fldArea("The 12-month picture","ambition","e.g. “Bina is the first name people in Amman think of for turnkey interiors, and we’re turning down work we’d once have chased.”");
+}
+function renderNotes(){
+  return head("Anything else we should know?","Anything at all — a story, a constraint, a worry, a dream. Optional.")+
+  fldArea("Notes","notes","Leave blank if nothing comes to mind.");
+}
+function renderReview(){
+  function row(k,v){ var e = (!v||!v.trim())?' empty':''; return '<div class="row"><div class="k">'+k+'</div><div class="v'+e+'">'+(e?'—':esc(v))+'</div></div>'; }
+  var dir = dirPairs.map(function(p,idx){ return state.dir[idx]?(p.label+': '+state.dir[idx]):null; }).filter(Boolean).join('\n');
+  var voice = voicePairs.map(function(p,idx){ return state.voice[idx]?(p.label+': '+state.voice[idx]):null; }).filter(Boolean).join(' · ');
+  var html = head("Here’s what we heard.","Read it back. Edit anything by stepping back — then send. We take it from here.");
+  html += '<div class="rev">'+
+    row("Company", state.company)+ row("Contact", state.contact)+ row("Email", state.email)+
+    row("The one client", state.audience)+ row("The feeling", state.feeling)+
+    row("Direction", dir)+ row("Brands loved", state.brands_loved)+ row("Can’t stand", state.brand_disliked)+
+    row("Character", state.adjectives.join(", "))+ row("Anti-brand", state.antibrand)+
+    row("Voice", voice + (state.voice_note?(' — “'+state.voice_note+'”'):''))+
+    row("12-month ambition", state.ambition)+ row("Notes", state.notes)+
+  '</div><div class="err" id="submitErr"></div>';
+  return html;
+}
+function renderDone(){
+  return '<div class="done" id="doneBox"><div class="spinner"></div><div class="big" style="opacity:.5">Sending…</div></div>';
+}
+
+/* ============== HELPERS ============== */
+function head(title, lede){ var n = String(i).padStart(2,'0'); return '<div class="eyebrow">Identity &amp; Brand Core</div><h1><span class="num">'+n+'</span>'+title+'</h1>'+(lede?'<p class="lede">'+lede+'</p>':''); }
+function fld(q,key,type,ph){ return '<label class="fld"><span class="q">'+q+'</span><input type="'+type+'" data-key="'+key+'" value="'+esc(state[key])+'" placeholder="'+esc(ph)+'" maxlength="200" autocomplete="off" /></label>'; }
+function fldArea(q,key,ph){ return '<label class="fld"><span class="q">'+q+'</span><textarea data-key="'+key+'" placeholder="'+esc(ph)+'" maxlength="1600">'+esc(state[key])+'</textarea></label>'; }
+
+/* ============== RENDER + WIRE ============== */
+function show(){
+  var main = document.getElementById('main');
+  main.innerHTML = '<div class="step active">'+ steps[i].render() +'</div>'+ navHTML();
+  document.getElementById('stepName').textContent = steps[i].name;
+  document.getElementById('stepCount').textContent = (i< steps.length-1? 'Step '+(i+1)+' / '+(steps.length-1) : 'Complete');
+  document.getElementById('barfill').style.width = Math.round(i/(steps.length-1)*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+  wire();
+  if(i===steps.length-1){ submit(); }
+}
+function navHTML(){
+  if(i===steps.length-1) return '';
+  var backHidden = i===0 ? ' disabled':'';
+  var nextLabel = i===0 ? 'Begin' : (i===steps.length-2 ? 'Send to CIFFR' : 'Next');
+  return '<div class="nav">'+
+    '<button class="ghost" id="back"'+backHidden+'>← Back</button>'+
+    '<button class="primary" id="next">'+nextLabel+'</button>'+
+  '</div><div class="err" id="err"></div>';
+}
+function wire(){
+  Array.prototype.forEach.call(document.querySelectorAll('[data-key]'), function(el){
+    el.addEventListener('input', function(){ state[el.getAttribute('data-key')] = el.value; persist(); });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-dir]'), function(el){
+    el.addEventListener('click', function(){
+      var idx = el.getAttribute('data-dir'); state.dir[idx] = el.getAttribute('data-val');
+      el.parentNode.querySelectorAll('.opt').forEach(function(g){g.classList.remove('sel');}); el.classList.add('sel'); persist();
+    });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-voice]'), function(el){
+    el.addEventListener('click', function(){
+      var idx = el.getAttribute('data-voice'); state.voice[idx] = el.getAttribute('data-val');
+      el.parentNode.querySelectorAll('.opt').forEach(function(g){g.classList.remove('sel');}); el.classList.add('sel'); persist();
+    });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-adj]'), function(el){
+    el.addEventListener('click', function(){
+      var w = el.getAttribute('data-adj'); var k = state.adjectives.indexOf(w);
+      if(k>-1){ state.adjectives.splice(k,1); el.classList.remove('sel'); }
+      else { if(state.adjectives.length>=5){ flashAdj(); return; } state.adjectives.push(w); el.classList.add('sel'); }
+      updAdjCount(); persist();
+    });
+  });
+  updAdjCount();
+  var nb = document.getElementById('next'); if(nb) nb.addEventListener('click', next);
+  var bb = document.getElementById('back'); if(bb && !bb.disabled) bb.addEventListener('click', back);
+}
+function updAdjCount(){ var c = document.getElementById('adjCount'); if(c){ var n=state.adjectives.length; c.textContent = n+' selected'+(n<3?' — pick at least 3':' ✓'); c.style.color = n>=3?'#7fc79b':'var(--muted)'; } }
+function flashAdj(){ var c=document.getElementById('adjCount'); if(c){ c.textContent='Keep it to 5 — remove one first.'; c.style.color='#e8917e'; } }
+function err(msg){ var e=document.getElementById('err'); if(e){ e.textContent=msg||''; } }
+
+/* ============== NAV LOGIC ============== */
+function validate(){
+  err('');
+  if(i===1){
+    if(!state.company.trim()) return err('A name for the company or project, please.'), false;
+    if(!state.contact.trim()) return err('Your name, please.'), false;
+    if(!state.email.trim() || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(state.email)) return err('A valid email so we can reach you.'), false;
+  }
+  if(i===6 && state.adjectives.length<3){ return err('Pick at least 3 words.'), false; }
+  return true;
+}
+function next(){ if(!validate()) return; if(i<steps.length-1){ i++; show(); } }
+function back(){ if(i>0){ i--; show(); } }
+
+/* ============== SUBMIT ============== */
+function payload(){
+  function dash(v){ return (v && v.trim())? v.trim() : "—"; }
+  var dir = dirPairs.map(function(p,idx){ return state.dir[idx]?(p.label+': '+state.dir[idx]):null; }).filter(Boolean).join(' | ');
+  var voice = voicePairs.map(function(p,idx){ return state.voice[idx]?(p.label+': '+state.voice[idx]):null; }).filter(Boolean).join(' | ');
+  if(state.voice_note && state.voice_note.trim()) voice += (voice?' | ':'')+'Phrase: "'+state.voice_note.trim()+'"';
+  return {
+    company: dash(state.company), contact: dash(state.contact), email: dash(state.email),
+    audience: dash(state.audience), feeling: dash(state.feeling),
+    direction_picks: dash(dir), brands_loved: dash(state.brands_loved), brand_disliked: dash(state.brand_disliked),
+    adjectives: dash(state.adjectives.join(", ")), antibrand: dash(state.antibrand),
+    voice: dash(voice), ambition: dash(state.ambition), notes: dash(state.notes)
+  };
+}
+function submit(){
+  var body = new URLSearchParams(payload()).toString();
+  var finished = false;
+  function done(ok){
+    if(finished) return; finished = true;
+    var box = document.getElementById('doneBox');
+    if(ok){
+      try{ localStorage.removeItem(STORE_KEY); }catch(e){}
+      box.innerHTML = '<div class="ar">صفر</div><div class="big">Thank you.</div>'+
+        '<p>That’s everything we need to start. We’re already getting to work on Bina’s identity — you’ll hear from us shortly.</p>'+
+        '<p style="margin-top:14px;color:var(--muted);font-size:13px">You can close this page. Tier 2 will reach you when we’re ready for it.</p>';
+      document.getElementById('barfill').style.width='100%';
+      document.getElementById('stepCount').textContent='Complete';
+    } else {
+      box.innerHTML = '<div class="big" style="font-size:28px">Almost there.</div>'+
+        '<p>We couldn’t reach our server just now. Your answers are saved on this device — please check your connection and try again.</p>'+
+        '<button class="primary" style="margin-top:20px" onclick="i=steps.length-2;show();">Back to review</button>';
+    }
+  }
+  fetch(WEBHOOK_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'}, body: body })
+    .then(function(){ done(true); }).catch(function(){ done(false); });
+  setTimeout(function(){ if(!finished) done(true); }, 6000);
+}
+
+/* ============== CIPHER FIELD (duotone, contrast-aware) ============== */
+(function(){
+  var nums = ["٠","١","٢","٣","٤","٥","٦","٧","٨","٩"];
+  var c = document.getElementById('cipher');
+  var W = window.innerWidth, H = window.innerHeight;
+  var count = W<560?34:64;
+  // focal point the field thins toward (upper-right, visible beside the panel)
+  var fx = 0.84, fy = 0.30;
+  for(var k=0;k<count;k++){
+    var x = Math.random(), y = Math.random();
+    var t = (x + y) / 2;                       // 0 = dark corner, 1 = light corner
+    var dist = Math.sqrt(Math.pow(x-fx,2)+Math.pow(y-fy,2)); // 0..~1.2
+    var near = Math.max(0, 1 - dist/0.9);      // 1 near focal, 0 far
+    var s = document.createElement('span');
+    s.textContent = nums[Math.floor(Math.random()*10)];
+    var size = (12 + Math.random()*46) * (1 - near*0.55);   // smaller near focal
+    s.style.fontSize = size.toFixed(1)+'px';
+    s.style.left = (x*100)+'%'; s.style.top = (y*100)+'%';
+    s.style.transform = 'rotate('+(Math.random()*40-20).toFixed(1)+'deg)';
+    // contrast-aware colour: light numerals on the dark side, dark on the light side, forest sprinkled
+    var col, op;
+    var roll = Math.random();
+    if(roll < 0.16){ col = '44,107,71'; op = 0.20; }              // forest accent
+    else if(t < 0.5){ col = '243,244,241'; op = 0.13; }           // pearl on dark
+    else { col = '22,25,28'; op = 0.12; }                          // onyx on light
+    op = op * (1 - near*0.6);                                      // fade toward focal
+    s.style.color = 'rgba('+col+','+op.toFixed(3)+')';
+    c.appendChild(s);
+  }
+  // faint key-lines threading to the focal point (CIFFR signature)
+  var svg = document.getElementById('keyline');
+  svg.setAttribute('viewBox','0 0 '+W+' '+H);
+  var px = fx*W, py = fy*H;
+  var starts = [[0,H*0.15],[W*0.12,H],[0,H*0.62],[W*0.55,H]];
+  var lines='';
+  starts.forEach(function(p){ lines += '<line x1="'+p[0]+'" y1="'+p[1]+'" x2="'+px+'" y2="'+py+'" stroke="rgba(44,107,71,0.10)" stroke-width="1"/>'; });
+  svg.innerHTML = lines + '<rect x="'+(px-7)+'" y="'+(py-7)+'" width="14" height="14" rx="4" transform="rotate(-9 '+px+' '+py+')" fill="rgba(44,107,71,0.45)"/>';
+})();
+
+/* ============== BOOT ============== */
+show();
+</script>
+</body>
+</html>
